@@ -6,8 +6,8 @@
 (defvar emacs-root (cond ((eq system-type 'cygwin) "/home/nilesh/")
 			 ((eq system-type 'gnu/linux) "/home/nilesh/")
 			 ((eq system-type 'linux) "/home/nilesh/")
-			 ((eq system-type 'darwin) "/Users/nilesh/")
-			 (t "c:/home/ngavaskar/"))
+			 ((eq system-type 'darwin) "/home/nilesh/")
+			 (t "/home/nilesh/"))
   "My home directory -- the root of my personal emacs load-path")
 
 ;; Add all the elisp directories under ~/emacs to my load path
