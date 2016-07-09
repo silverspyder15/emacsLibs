@@ -16,9 +16,10 @@
   (add-path "emacs/site-lisp")			;; elisp stuff from the net
   (add-path "emacs/site-lisp/color-theme")	;; http://www.emacswiki.org/cgi-bin/wiki?ColorTheme
   (add-path "emacs/site-lisp/erlang")		;; file:/usr/lib64/erlang/lib/tools-2.5.2/emacs
-  (add-path "emacs/site-lisp/git-emacs")	;; git://github.com/tsgates/git-emacs.git
+;;  (add-path "emacs/site-lisp/git-emacs")	;; git://github.com/tsgates/git-emacs.git
   (add-path "emacs/site-lisp/nxml-mode")	;; http://www.thaiopensource.com/nxml-mode
   (add-path "emacs/site-lisp/speedbar")		;; http://cedet.sourceforge.net/speedbar.shtml
+  (add-path "emacs/site-lisp/magit/lisp")       ;; Magit package for git
   )
 
 ;; Set cscope initial directory
@@ -44,6 +45,14 @@
 (load-library "xcscope")			;; cscope config
 (load-library "xpycscope")			;; python cscope config
 (load-library "goto-last-change")               ;; Go to the last change in the buffer
+
+
+;; Magit configuration
+(require 'magit)
+(with-eval-after-load 'info
+  (info-initialize)
+  (add-to-list 'Info-directory-list
+	       "~/emacs/site-lisp/magit/Documentation/"))
 
 (require 'xcscope)
 (setq cscope-do-not-update-database t)
