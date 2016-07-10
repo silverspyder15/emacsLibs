@@ -1,14 +1,15 @@
 ;;; ~/emacs/lisp/ekeys.el
 
 ;; Remap global keys
-(define-key global-map "\C-h" 'delete-backward-char)
-(define-key global-map "\C-xb" 'iswitchb-buffer)
+;;(define-key global-map "\C-h" 'delete-backward-char)
+;;(define-key global-map "\C-xb" 'iswitchb-buffer)
 (define-key global-map "\C-x\C-b" 'ibuffer)
 (define-key global-map "\C-x " 'just-one-space)
 (define-key global-map "\M- " 'set-mark-command)
 (define-key global-map "\M-g" 'goto-line)
 (define-key global-map "\M-=" 'what-line)
 (define-key global-map [(control x) return] nil)	;; make `C-x C-m' and `C-x RET' different
+(define-key global-map "\C-xg" 'magit-status)            ;; enter the magit status buffer.
 
 (global-set-key [home] 'beginning-of-line)
 (global-set-key [end] 'end-of-line)

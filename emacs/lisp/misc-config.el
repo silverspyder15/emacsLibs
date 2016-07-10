@@ -16,26 +16,29 @@
 (show-paren-mode t)
 
 ;; Set up ibuffer
-(autoload 'ibuffer "ibuffer" "List buffers." t)
+;;(autoload 'ibuffer "ibuffer" "List buffers." t)
 
 
-(setq ibuffer-formats '((mark modified read-only " " (name 40 40) " " (size 6 -1 :right) " " (mode 16 16 :center) " " (process 8 -1) " " filename)
-			(mark " " (name 16 -1) " " filename))
-      ibuffer-saved-filter-groups '(("default"
-				     ("c" (mode . c-mode))
-				     ("c++" (mode . c++-mode))
-				     ("python" (mode . python-mode))
-				     ("haskell" (mode . haskell-mode))
-				     ("emacs" (or (name . "^\\*scratch\\*$") (name . "^\\*Messages\\*$"))))
-				     ("dired" (mode . dired-mode)))
-      ibuffer-elide-long-columns t
-      ibuffer-eliding-string "&")
+;;(setq ibuffer-formats '((mark modified read-only " " (name 40 40) " " (size 6 -1 :right) " " (mode 16 16 :center) " " (process 8 -1) " " filename)
+;			(mark " " (name 16 -1) " " filename))
+;      ibuffer-saved-filter-groups '(("default";
+;				     ("c" (mode . c-mode))
+;				     ("c++" (mode . c++-mode))
+;				     ("python" (mode . python-mode))
+;				     ("haskell" (mode . haskell-mode))
+;				     ("emacs" (or (name . "^\\*scratch\\*$") (name . "^\\*Messages\\*$"))))
+;				     ("dired" (mode . dired-mode)))
+;      ibuffer-elide-long-columns t
+;      ibuffer-eliding-string "&")
 
-(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-switch-to-saved-filter-groups "default")))
+;(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-switch-to-saved-filter-groups "default")))
 
 ;; Set up iswitchb
-(iswitchb-mode 1)
-(setq iswitchb-default-method 'maybe-frame)
+;;(iswitchb-mode 1)
+;;(setq iswitchb-default-method 'maybe-frame)
+
+;; Setup ido mode
+(ido-mode 1)
 
 ;; Set up tramp
 (setq tramp-default-method "ssh")
