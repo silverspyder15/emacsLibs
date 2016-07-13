@@ -7,7 +7,7 @@
 			 ((eq system-type 'gnu/linux) "/home/user/")
 			 ((eq system-type 'linux) "/home/user/")
 			 ((eq system-type 'darwin) "/home/user/")
-			 (t "/home/nilesh/"))
+			 (t "/home/user/"))
   "My home directory -- the root of my personal emacs load-path")
 
 ;; Add all the elisp directories under ~/emacs to my load path
