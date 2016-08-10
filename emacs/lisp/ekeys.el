@@ -10,6 +10,8 @@
 (define-key global-map "\M-=" 'what-line)
 (define-key global-map [(control x) return] nil)	;; make `C-x C-m' and `C-x RET' different
 (define-key global-map "\C-xg" 'magit-status)            ;; enter the magit status buffer.
+(define-key global-map "\C-cc" 'comment-region)
+(define-key global-map "\C-cu" 'uncomment-region)
 
 (global-set-key [home] 'beginning-of-line)
 (global-set-key [end] 'end-of-line)

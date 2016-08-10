@@ -3,11 +3,11 @@
 (require 'cl)
 
 ;; I keep everything under ~/emacs
-(defvar emacs-root (cond ((eq system-type 'cygwin) "/home/user/")
-			 ((eq system-type 'gnu/linux) "/home/user/")
-			 ((eq system-type 'linux) "/home/user/")
-			 ((eq system-type 'darwin) "/home/user/")
-			 (t "/home/user/"))
+(defvar emacs-root (cond ((eq system-type 'cygwin) "/home/nilesh/")
+			 ((eq system-type 'gnu/linux) "/home/nilesh/")
+			 ((eq system-type 'linux) "/home/nilesh/")
+			 ((eq system-type 'darwin) "/home/nilesh/")
+			 (t "/home/nilesh/"))
   "My home directory -- the root of my personal emacs load-path")
 
 ;; Add all the elisp directories under ~/emacs to my load path
@@ -27,6 +27,7 @@
 (require 'font-lock) ; enable syntax highlighting
 
 ;; The remainder of my config is in libraries
+(load-library "init")				;; initialization libraries
 (load-library "efuncs")				;; custom functions
 (load-library "ekeys")				;; key bindings
 (load-library "cc-config")			;; C/C++ mode config
@@ -56,8 +57,11 @@
 
 (require 'xcscope)
 (setq cscope-do-not-update-database t)
-(setq cscope-set-initial-directory "/home/user/workspaces")
+(setq cscope-set-initial-directory "/home/nilesh/workspaces")
 (provide 'cscope-config)
+
+;;Map alt key to meta
+(setq x-alt-keysm 'meta)
 
 (server-start)					;; start the emacs server running
 
