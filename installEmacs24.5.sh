@@ -1,7 +1,17 @@
-sudo apt-get install build-essential
-sudo apt-get build-dep emacs24
+#!/usr/bin/env  bash
+set -x
+
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+
+apt-get install build-essential
+apt-get build-dep emacs24
 tar -xf emacs-24.5.tar.*
-cd emacs-24.5
-sudo ./configure
-sudo make
-sudo make install
+pushd emacs-24.5
+./configure
+make
+make install
+popd

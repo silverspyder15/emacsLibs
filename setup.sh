@@ -7,9 +7,9 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-#cp -r emacs ~
-#cp .emacs ~
-#cp pycscope* /usr/local/bin/.
+cp -r emacs ~
+cp .emacs ~
+cp pycscope* /usr/local/bin/.
 
 
 # Replace all instances of nilesh with your username inside
