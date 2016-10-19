@@ -82,4 +82,14 @@
   ;; If there is more than one, they won't work right.
  '(grep-command "grep -nH -i -r "))
 
+;; if first line of file a certain text, change the major mode.
+;; Ref: http://ergoemacs.org/emacs/emacs_auto-activate_a_major-mode.html
+;; Python major mode.
+(add-to-list 'magic-mode-alist '("#! @PYTHON@" . python-mode) )
+(add-to-list 'magic-mode-alist '("#! /usr/bin/python" . python-mode) )
+
+;;Perl major mode.
+(add-to-list 'magic-mode-alist '("#! /usr/bin/perl -w" . perl-mode) )
+
+
 ;;; end ~/emacs/lisp/misc-config.el
