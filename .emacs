@@ -20,22 +20,25 @@
   (add-path "emacs/site-lisp/nxml-mode")	;; http://www.thaiopensource.com/nxml-mode
   (add-path "emacs/site-lisp/speedbar")		;; http://cedet.sourceforge.net/speedbar.shtml
   (add-path "emacs/site-lisp/magit/lisp")       ;; Magit package for git
+  (add-path "emacs/site-lisp/origami")          ;; Origami package - https://github.com/gregsexton/origami.el
+  (add-path "emacs/helm-master")   ;; Helm-config
   )
+;  (add-to-list 'load-path "/home/nilesh/emacs/helm-master")
 
 ;; Set cscope initial directory
 
+
 (require 'font-lock) ; enable syntax highlighting
+(require 'protobuf-mode)
 
 ;; The remainder of my config is in libraries
 (load-library "init")				;; initialization libraries
 (load-library "efuncs")				;; custom functions
-(load-library "ekeys")				;; key bindings
 (load-library "cc-config")			;; C/C++ mode config
 (load-library "dired-config")			;; dired-mode config
 (load-library "erl-config")			;; Erlang mode config
 (load-library "git-config")			;; Git mode config
 ;;(load-library "irc-config")			;; IRC client config
-(load-library "misc-config")			;; miscellaneous one-off config settings
 (load-library "p4-config")			;; Perforce config
 ;;(load-library "ruby-config")			;; Ruby mode config
 (load-library "scons-config")			;; scons-related config
@@ -45,29 +48,18 @@
 (load-library "xml-config")			;; XML mode config
 (load-library "xcscope")			;; cscope config
 (load-library "xpycscope")			;; python cscope config
+;;(load-library "thing-cmds")                     ;; Commands that use things.
+(load-library "helm-files")                     ;; Load some helm variables.
 (load-library "goto-last-change")               ;; Go to the last change in the buffer
+(load-library "misc-config")			;; miscellaneous one-off config settings
+(load-library "ekeys")				;; key bindings
 
-
-;; Magit configuration
-(require 'magit)
-(with-eval-after-load 'info
-  (info-initialize)
-  (add-to-list 'Info-directory-list
-	       "~/emacs/site-lisp/magit/Documentation/"))
-
-(require 'xcscope)
-(setq cscope-do-not-update-database t)
-(setq cscope-set-initial-directory "/home/nilesh/workspaces")
-(provide 'cscope-config)
-
-;;Map alt key to meta
-(setq x-alt-keysm 'meta)
+(require 'helm-config)
 
 (server-start)					;; start the emacs server running
 
-
+(put 'set-mark-command 'disabled nil)
 
 ;;; end ~/.emacs
 
 
-(put 'set-mark-command 'disabled nil)

@@ -6,8 +6,8 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; Additional customization for X or Windows
-(and window-system 
-    (progn 
+(and window-system
+    (progn
 
       ;; Turn on the color works
       (require 'color-theme)
@@ -69,15 +69,19 @@
       (mouse-avoidance-mode 'animate)
 
       ;; Setup frame attributes
-      (setq default-frame-alist (append '((vertical-scroll-bars . nil) 
+      (setq default-frame-alist (append '((vertical-scroll-bars . nil)
 					  (cursor-type . box)
 					  (width . 180)
 					  (height . 60)) default-frame-alist))
 
       (cond ((eq window-system 'w32) (setq default-frame-alist (append '((font . "fixed613")) default-frame-alist)))
 	    ;;((eq window-system 'x) (setq default-frame-alist (append '((font . "fixed")) default-frame-alist))))
-            ((eq window-system 'x) (setq default-frame-alist (append '((font . "-misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1")) default-frame-alist))))
-      
+
+	    ;; A little bigger font. Ref: https://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
+	    ;;((eq window-system 'x) (setq default-frame-alist (append '((font . "-misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1")) default-frame-alist))))
+	    ((eq window-system 'x) (setq default-frame-alist (append '((font . "-misc-fixed-medium-r-normal--14-130-75-75-C-80-ISO10646-1")) default-frame-alist))))
+
+
       ;; Spruce up the title bar and mode line
       (setq frame-title-format '("%b (" system-name ")"))))
 
@@ -86,5 +90,24 @@
       line-number-mode t
       column-number-mode t
       scroll-step 1)
+
+
+;;;;;;;;;;;;;;;; Code folding ;;;;;;;;;;;;;;;;;;;;;
+;; Selective display for code folding
+(global-set-key (kbd "<f5>") 'set-selective-display-dlw)
+
+(defun set-selective-display-dlw (&optional level)
+"Fold text indented same of more than the cursor.
+If level is set, set the indent level to LEVEL.
+If 'selective-display' is already set to LEVEL, clicking
+F5 again will unset 'selective-display' by setting it to 0."
+  (interactive "P")
+  (if (eq selective-display (1+ (current-column)))
+      (set-selective-display 0)
+    (set-selective-display (or level (1+ (current-column))))))
+
+;;;;;;;;;;; Display line numbers ;;;;;;;;;;;;
+(global-linum-mode t)
+
 
 ;;; end ~/emacs/lisp/screen-config.el

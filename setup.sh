@@ -9,6 +9,7 @@ fi
 
 cp -r emacs ~
 cp .emacs ~
+cp -r .emacs.d ~
 cp pycscope* /usr/local/bin/.
 
 

@@ -5,9 +5,9 @@
 (setq auto-mode-alist (cons '("\\.tcc$" . c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.mco$" . c++-mode) auto-mode-alist))
 
-(c-add-style "my-cc-style" 
+(c-add-style "my-cc-style"
 	     '("bsd"
-	       (tab-width . 8)
+	       (tab-width . 4)
 	       (indent-tabs-mode . nil)
 	       (c-basic-offset . 4)
 	       (c-tab-always-indent . nil)
@@ -24,6 +24,11 @@
 					  (case-label after)
 					  (label after)
 					  (access-label after)))
+	       (c-hanging-semi&comma-criteria
+		. (c-semi&comma-no-newlines-for-oneline-inliners
+		   c-semi&comma-inside-parenlist
+		   c-semi&comma-no-newlines-before-nonblanks))
+
 	       (c-cleanup-list . (scope-operator
 				  defun-close-semi))))
 

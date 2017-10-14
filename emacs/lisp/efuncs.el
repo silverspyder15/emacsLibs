@@ -143,7 +143,6 @@ be pasted into a RTF-enabled application.
   (set-selective-display
    (if selective-display nil (or column 1))))
 
-
 ;;; Slick copy for C-w and M-w to copy and kill current line without selection
 ;;; http://www.emacswiki.org/emacs/SlickCopy
 
@@ -182,5 +181,156 @@ be pasted into a RTF-enabled application.
         (when (null (mark t)) (ding))
         (setq global-mark-ring (nbutlast mark-ring))
         (goto-char (marker-position (car (last global-mark-ring))))))
+
+
+
+;;;;;;;;;;;; Copy without selection ;;;;;;;;;;;;;;;;;;;
+(defun get-point (symbol &optional arg)
+      "get the point"
+      (funcall symbol arg)
+      (point)
+     )
+
+(defun copy-thing (begin-of-thing end-of-thing &optional arg)
+  "copy thing between beg & end into kill ring"
+  (save-excursion
+    (let ((beg (get-point begin-of-thing 1))
+	  (end (get-point end-of-thing arg)))
+      (copy-region-as-kill beg end)))
+  )
+
+
+(defun paste-to-mark(&optional arg)
+  "Paste things to mark, or to the prompt in shell-mode"
+  (let ((pasteMe
+	 (lambda()
+	   (if (string= "shell-mode" major-mode)
+	       (progn (comint-next-prompt 25535) (yank))
+	     (progn (goto-char (mark)) (yank) )))))
+    (if arg
+	(if (= arg 1)
+	    nil
+	  (funcall pasteMe))
+      (funcall pasteMe))
+    ))
+
+
+;;;;;;;; Marking words ;;;;;;;;;;;;
+;; Marks words without underscore, hyphens
+(defun mark-word-basic()
+  "Select some line"
+  (interactive)
+  (let (p1 p2)
+    (setq p1 (get-point 'backward-word))
+    (setq p2 (get-point 'forward-word))
+    (message "Marking %s:%s" p1 p2)
+    (goto-char p1)
+    (push-mark p2)
+    (setq mark-active t)))
+
+;; Marks word including underscore and hyphen
+(defun mark-word()
+  "Select some line"
+  (interactive)
+  (let ((table (copy-syntax-table (syntax-table))))
+    (modify-syntax-entry ?_ "w" table)
+    (modify-syntax-entry ?- "w" table)
+	(with-syntax-table table
+	  (mark-word-basic)
+	)))
+
+;; Code to select word including hyphens and underscores.
+;; Similar to mark-word
+(defun my-select-word()
+  "Select some line"
+  (interactive)
+  (let ((table (copy-syntax-table (syntax-table))))
+    (modify-syntax-entry ?_ "w" table)
+    (modify-syntax-entry ?- "w" table)
+	(with-syntax-table table
+	  (let (p1 p2)
+	    (setq p1 (get-point 'backward-word))
+	    (setq p2 (get-point 'forward-word))
+	    (message "Marking %s:%s" p1 p2)
+	    (goto-char p1)
+	    (push-mark p2)
+	    (setq mark-active t)))
+	))
+
+;; Marking an entire line.
+(defun my-select-line()
+  "Select some line"
+  (message "Indside my select lien")
+  (interactive)
+  (let (p1 p2)
+    (setq p1 (line-beginning-position))
+    (setq p2 (line-end-position))
+    (message "Marking %s:%s" p1 p2)
+    (goto-char p1)
+    (push-mark p2)
+    (setq mark-active t)))
+
+
+(defun mark-thing (begin-of-thing end-of-thing &optional arg)
+  "mark thing between beg & end"
+  (message "Inside mark thing")
+  (save-excursion
+    (let ((beg (get-point begin-of-thing 1))
+	  (end (get-point end-of-thing arg)))
+      (message "Marking %s:%s" beg end)
+      (goto-char beg)
+      (push-mark end)
+      (setq mark-active t)
+      ))
+  )
+
+
+;;;;;;;;;; Copy word ;;;;;;;;;;;;;;;;;
+;;; Modified to include underscore and hyphen as part of a word.
+(defun copy-word (&optional arg)
+      "Copy words at point into kill-ring"
+      (interactive "P")
+      (let ((table (copy-syntax-table (syntax-table))))
+	(modify-syntax-entry ?_ "w" table)
+	(modify-syntax-entry ?- "w" table)
+	(with-syntax-table table
+	  (copy-thing 'backward-word 'forward-word arg)))
+      (message "Copied word")
+       ;;(paste-to-mark arg)
+     )
+;; (global-set-key (kbd "C-c w") 'copy-word)
+;; Enabled in ekeys.el
+
+
+;;;;;;;;;; Copy string ;;;;;;;;;;;;
+(defun beginning-of-string(&optional arg)
+       "  "
+       (re-search-backward "[ \t]" (line-beginning-position) 3 1)
+     	     (if (looking-at "[\t ]")  (goto-char (+ (point) 1)) )
+     )
+     (defun end-of-string(&optional arg)
+       " "
+       (re-search-forward "[ \t]" (line-end-position) 3 arg)
+     	     (if (looking-back "[\t ]") (goto-char (- (point) 1)) )
+     )
+
+     (defun thing-copy-string-to-mark(&optional arg)
+       " Try to copy a string and paste it to the mark
+     When used in shell-mode, it will paste string on shell prompt by default "
+       (interactive "P")
+       (copy-thing 'beginning-of-string 'end-of-string arg)
+       (paste-to-mark arg)
+       )
+;;  (global-set-key (kbd "C-c s")         (quote thing-copy-string-to-mark))
+
+;;;;;;;;; Copy paragraph ;;;;;;;;;;;;;
+     (defun copy-paragraph (&optional arg)
+      "Copy paragraphes at point"
+       (interactive "P")
+       (copy-thing 'backward-paragraph 'forward-paragraph arg)
+       (paste-to-mark arg)
+       )
+;;  (global-set-key (kbd "C-c p")         (quote copy-paragraph))
+
 
 ;;; end ~/emacs/lisp/efuncs.el

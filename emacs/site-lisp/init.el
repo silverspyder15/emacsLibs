@@ -32,6 +32,9 @@
 (with-eval-after-load 'go-mode
   (require 'go-autocomplete))
 
+(add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
+(require 'golint)
+
 (defun my-go-mode-hook ()
   ; Use goimports instead of go-fmt
   (setq gofmt-command "goimports")
@@ -40,7 +43,7 @@
   ; Customize compile command to run go build
   (if (not (string-match "go" compile-command))
       (set (make-local-variable 'compile-command)
-           "go generate && go build -v && go test -v && go vet"))
+           "go generate && go build -v && go test -v && go vet && golint"))
   ; Go oracle
   (load-file "$GOPATH/src/golang.org/x/tools/cmd/oracle/oracle.el")
   ; Godef jump key binding
