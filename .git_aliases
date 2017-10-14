@@ -1,0 +1,65 @@
+#Git aliases
+alias ga='git add'
+alias gb='git branch -vv --sort=committerdate' 
+#--color=always| awk '{printf "%d %s\n", NR, $0}''
+alias gbn='git rev-parse --abbrev-ref HEAD'
+alias gbd='git branch -d'  # delete merged branch
+alias gbdmf='git push myFork :`git rev-parse --abbrev-ref HEAD`'   # Delete merged branch from remote myFork
+#alias gbD='git branch -D'  # Delete unmerged branch - force delete
+alias gc='git checkout'
+alias gca='git commit --amend'
+alias gcb='git checkout -b'
+alias gco='git checkout --ours'
+alias gct='git checkout --theirs'
+alias gcm='git commit -m'
+alias gcp='git cherry-pick'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gl='git lg2'
+alias gpr='git pull --rebase'
+alias grv='git remote -v'
+alias gu='git reset HEAD --'  # To unstage a file
+alias gee="git config --global core.editor "emacs""
+alias gev="git config --global core.editor "vim""
+
+gpmf()
+{
+branch=`git rev-parse --abbrev-ref HEAD`
+echo "Pushing to myFork:$branch"
+git push myFork $branch
+}
+
+gbD()
+{
+git branch -D $1
+git push myFork :$1
+}
+
+
+gpmff()
+{
+branch=`git rev-parse --abbrev-ref HEAD`
+echo "Force Pushing to myFork:$branch"
+git push -f myFork $branch
+}
+#alias gpobf='git push -f myFork `git rev-parse --abbrev-ref HEAD`'
+alias gra='git rebase --abort'
+alias grc='git rebase --continue'
+alias gs='git st'
+#alias gsh='git show'
+alias gsh1='git show `git rev-parse --short HEAD~1`'
+alias gsh2='git show `git rev-parse --short HEAD~2`'
+alias gshf='git show --name-only'
+
+gsh(){
+if [ "$#" -eq 1 ];then
+  git show `git rev-parse --short HEAD~$1`
+else
+  git show
+fi
+
+}
+
+gbc(){
+    git checkout `git branch --sort=committerdate | tail -"$1" | head -1`     
+}
