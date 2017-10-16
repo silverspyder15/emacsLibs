@@ -114,15 +114,16 @@
 
 ;;;;;;; Cscope config ;;;;;;;;
 (require 'xcscope)
+(require 'xpycscope)
 (setq cscope-do-not-update-database t)
+
+;; Set cscope initial directory
 (setq cscope-set-initial-directory "/home/nilesh/workspaces")
 (provide 'cscope-config)
-
 
 ;;;;;;; Dired ;;;;;;;;;;
 (autoload 'dired-async-mode "dired-async.el" nil t)
 (dired-async-mode 1)
-
 
 
 ;;;;;;; Add a column marker line ;;;;;;;;;;;
@@ -174,5 +175,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Map alt key to meta
 (setq x-alt-keysm 'meta)
+
 
 ;;; end ~/emacs/lisp/misc-config.el

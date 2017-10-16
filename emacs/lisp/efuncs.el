@@ -308,19 +308,19 @@ be pasted into a RTF-enabled application.
        (re-search-backward "[ \t]" (line-beginning-position) 3 1)
      	     (if (looking-at "[\t ]")  (goto-char (+ (point) 1)) )
      )
-     (defun end-of-string(&optional arg)
-       " "
-       (re-search-forward "[ \t]" (line-end-position) 3 arg)
-     	     (if (looking-back "[\t ]") (goto-char (- (point) 1)) )
-     )
+(defun end-of-string(&optional arg)
+  " "
+  (re-search-forward "[ \t]" (line-end-position) 3 arg)
+  (if (looking-back "[\t ]") (goto-char (- (point) 1)) )
+  )
 
-     (defun thing-copy-string-to-mark(&optional arg)
-       " Try to copy a string and paste it to the mark
+(defun thing-copy-string-to-mark(&optional arg)
+  " Try to copy a string and paste it to the mark
      When used in shell-mode, it will paste string on shell prompt by default "
-       (interactive "P")
-       (copy-thing 'beginning-of-string 'end-of-string arg)
-       (paste-to-mark arg)
-       )
+  (interactive "P")
+  (copy-thing 'beginning-of-string 'end-of-string arg)
+  (paste-to-mark arg)
+  )
 ;;  (global-set-key (kbd "C-c s")         (quote thing-copy-string-to-mark))
 
 ;;;;;;;;; Copy paragraph ;;;;;;;;;;;;;
@@ -331,6 +331,14 @@ be pasted into a RTF-enabled application.
        (paste-to-mark arg)
        )
 ;;  (global-set-key (kbd "C-c p")         (quote copy-paragraph))
+
+;;;;;;;;; Reload the emacs configuration ;;;;;;;;;
+(defun reload-emacs(&optional arg)
+  "Reload emacs config"
+  (interactive "P")
+  (message "reloading emacs config")
+  (load-file "~/.emacs")
+  )
 
 
 ;;; end ~/emacs/lisp/efuncs.el
