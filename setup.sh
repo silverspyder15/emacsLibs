@@ -19,3 +19,11 @@ cp pycscope* /usr/local/bin/.
 # ~/emacs/site-lisp/magit/config.mk
 curUser=`who am i | awk '{print $1}'`
 sed -i "s/nilesh/$curUser/g" ~/.emacs ~/emacs/site-lisp/init.el ~/emacs/site-lisp/magit/config.mk
+
+# Soft link all files into the home directory.
+curDir=`pwd`
+pushd ~
+ln -s $curDir/.emacs
+ln -s $curDir/.emacs.d/
+ln -s $curDir/emacs/
+popd
